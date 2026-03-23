@@ -129,6 +129,8 @@
   }
   .main-content {
     padding-top: 64px; /* Mobile header space minimized */
+    padding-left: 4px;  /* Maximize width on mobile */
+    padding-right: 4px; /* Maximize width on mobile */
   }
 }
 
