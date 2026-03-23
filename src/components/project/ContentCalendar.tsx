@@ -342,13 +342,16 @@ const ContentCalendar = ({
       {isModalOpen && (
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.4)',
+          backgroundColor: 'rgba(0,0,0,0.6)',
           display: 'flex', justifyContent: 'center', alignItems: 'center',
-          zIndex: 100, backdropFilter: 'blur(4px)'
+          zIndex: 1000, backdropFilter: 'blur(8px)',
+          padding: isMobile ? '16px' : '0'
         }} onClick={() => setIsModalOpen(false)}>
           <div style={{
             backgroundColor: 'var(--color-bg-white)', padding: isMobile ? '20px' : '32px', borderRadius: '24px',
             width: '100%', maxWidth: '500px', 
+            maxHeight: isMobile ? '90vh' : 'auto',
+            overflowY: isMobile ? 'auto' : 'visible',
             boxShadow: isMobile ? '0 4px 12px rgba(0,0,0,0.05)' : '0 20px 40px rgba(0,0,0,0.1)', 
             animation: 'fadeIn 0.3s ease'
           }} onClick={e => e.stopPropagation()}>
