@@ -347,8 +347,10 @@ const ContentCalendar = ({
           zIndex: 100, backdropFilter: 'blur(4px)'
         }} onClick={() => setIsModalOpen(false)}>
           <div style={{
-            backgroundColor: 'var(--color-bg-white)', padding: '32px', borderRadius: '24px',
-            width: '100%', maxWidth: '500px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', animation: 'fadeIn 0.3s ease'
+            backgroundColor: 'var(--color-bg-white)', padding: isMobile ? '20px' : '32px', borderRadius: '24px',
+            width: '100%', maxWidth: '500px', 
+            boxShadow: isMobile ? '0 4px 12px rgba(0,0,0,0.05)' : '0 20px 40px rgba(0,0,0,0.1)', 
+            animation: 'fadeIn 0.3s ease'
           }} onClick={e => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
               <h3 style={{ fontSize: '1.4rem', fontWeight: 500 }}>{editingPostId ? 'Edit Post' : 'Add Post'}</h3>
@@ -357,46 +359,46 @@ const ContentCalendar = ({
               </button>
             </div>
 
-            <form onSubmit={handleSavePost} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <form onSubmit={handleSavePost} style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '12px' : '20px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '6px' }}>Theme</label>
-                <input autoFocus type="text" required value={modalData.theme} onChange={e => setModalData({...modalData, theme: e.target.value})} style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: '0.95rem', outline: 'none', fontFamily: 'inherit' }} placeholder="Theme or title" />
+                <label style={{ display: 'block', fontSize: isMobile ? '11px' : '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '4px' }}>Theme</label>
+                <input autoFocus type="text" required value={modalData.theme} onChange={e => setModalData({...modalData, theme: e.target.value})} style={{ width: '100%', padding: isMobile ? '10px 12px' : '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: isMobile ? '13px' : '0.95rem', outline: 'none', fontFamily: 'inherit' }} placeholder="Theme or title" />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '6px' }}>Content</label>
-                <textarea rows={3} value={modalData.content} onChange={e => setModalData({...modalData, content: e.target.value})} style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: '0.95rem', outline: 'none', resize: 'vertical', fontFamily: 'inherit' }} placeholder="Post content..." />
+                <label style={{ display: 'block', fontSize: isMobile ? '11px' : '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '4px' }}>Content</label>
+                <textarea rows={3} value={modalData.content} onChange={e => setModalData({...modalData, content: e.target.value})} style={{ width: '100%', padding: isMobile ? '10px 12px' : '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: isMobile ? '13px' : '0.95rem', outline: 'none', resize: 'vertical', fontFamily: 'inherit' }} placeholder="Post content..." />
               </div>
 
-              <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '12px' : '16px' }}>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '6px' }}>Category</label>
-                  <input type="text" value={modalData.category} onChange={e => setModalData({...modalData, category: e.target.value})} style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: '0.95rem', outline: 'none', fontFamily: 'inherit' }} placeholder="e.g. Marketing" />
+                  <label style={{ display: 'block', fontSize: isMobile ? '11px' : '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '4px' }}>Category</label>
+                  <input type="text" value={modalData.category} onChange={e => setModalData({...modalData, category: e.target.value})} style={{ width: '100%', padding: isMobile ? '10px 12px' : '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: isMobile ? '13px' : '0.95rem', outline: 'none', fontFamily: 'inherit' }} placeholder="e.g. Marketing" />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '6px' }}>Date</label>
-                  <input type="date" required value={modalData.date} onChange={e => setModalData({...modalData, date: e.target.value})} style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: '0.95rem', outline: 'none', fontFamily: 'inherit' }} />
+                  <label style={{ display: 'block', fontSize: isMobile ? '11px' : '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '4px' }}>Date</label>
+                  <input type="date" required value={modalData.date} onChange={e => setModalData({...modalData, date: e.target.value})} style={{ width: '100%', padding: isMobile ? '10px 12px' : '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: isMobile ? '13px' : '0.95rem', outline: 'none', fontFamily: 'inherit' }} />
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '12px' : '16px' }}>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '6px' }}>Link</label>
-                  <input type="url" value={modalData.link} onChange={e => setModalData({...modalData, link: e.target.value})} style={{ width: '100%', padding: '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: '0.95rem', outline: 'none', fontFamily: 'inherit' }} placeholder="https://..." />
+                  <label style={{ display: 'block', fontSize: isMobile ? '11px' : '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '4px' }}>Link</label>
+                  <input type="url" value={modalData.link} onChange={e => setModalData({...modalData, link: e.target.value})} style={{ width: '100%', padding: isMobile ? '10px 12px' : '14px 16px', borderRadius: '12px', border: 'none', backgroundColor: 'var(--color-bg-grey)', fontSize: isMobile ? '13px' : '0.95rem', outline: 'none', fontFamily: 'inherit' }} placeholder="https://..." />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '6px' }}>Experiment</label>
+                  <label style={{ display: 'block', fontSize: isMobile ? '11px' : '0.75rem', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.03em', color: '#a3a3a3', marginBottom: '4px' }}>Experiment</label>
                   <ExperimentDropdown value={modalData.experiment} onChange={val => setModalData({...modalData, experiment: val})} options={experiments} />
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
                 {editingPostId && (
-                  <button type="button" onClick={handleDeletePost} style={{ backgroundColor: 'transparent', color: '#ff3b30', padding: '14px 20px', borderRadius: '12px', border: '1px solid rgba(255,59,48,0.15)', fontSize: '0.95rem', fontWeight: 500, cursor: 'pointer' }}>
+                  <button type="button" onClick={handleDeletePost} style={{ backgroundColor: 'transparent', color: '#ff3b30', padding: isMobile ? '10px 16px' : '14px 20px', borderRadius: '12px', border: '1px solid rgba(255,59,48,0.15)', fontSize: isMobile ? '13px' : '0.95rem', fontWeight: 500, cursor: 'pointer' }}>
                     Delete
                   </button>
                 )}
-                <button type="submit" style={{ flex: 1, backgroundColor: 'var(--color-black)', color: 'var(--color-bg-white)', padding: '14px', borderRadius: '12px', border: 'none', fontSize: '0.95rem', fontWeight: 500, cursor: 'pointer' }}>
+                <button type="submit" style={{ flex: 1, backgroundColor: 'var(--color-black)', color: 'var(--color-bg-white)', padding: isMobile ? '10px 16px' : '14px 20px', borderRadius: '12px', border: 'none', fontSize: isMobile ? '13px' : '0.95rem', fontWeight: 500, cursor: 'pointer' }}>
                   {editingPostId ? 'Save Changes' : 'Schedule Post'}
                 </button>
               </div>
