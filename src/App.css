@@ -112,12 +112,14 @@
   padding: 0;
 }
 
-.lang-option.active {
-  color: var(--color-black);
+.lang-toggle-btn {
+  transition: all 0.2s ease;
+  border-radius: 8px;
 }
 
-.lang-option:hover:not(.active) {
-  color: #888888;
+.lang-toggle-btn:hover {
+  background-color: rgba(0,0,0,0.03) !important;
+  color: var(--color-black) !important;
 }
 
 @media (max-width: 767px) {

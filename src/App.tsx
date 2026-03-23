@@ -7,7 +7,7 @@ import ProjectTab from './pages/ProjectTab';
 import AcademyTab from './pages/AcademyTab';
 
 import { useAuth } from './context/AuthContext';
-import { LogOut, User, X } from 'lucide-react';
+import { LogOut, User, X, Globe } from 'lucide-react';
 import Auth from './components/auth/Auth';
 import './App.css';
 
@@ -20,6 +20,12 @@ function App() {
     if (user) setIsAuthModalOpen(false);
   }, [user]);
 
+  React.useEffect(() => {
+    const browserLang = navigator.language.split('-')[0].toUpperCase();
+    if (browserLang === 'FR') setLang('FR');
+    else setLang('EN');
+  }, []);
+
   if (loading) {
     return <div className="loading-screen"><div className="spinner"></div></div>;
   }
@@ -31,9 +37,19 @@ function App() {
           <Link to="/done" className="brand-logo" style={{ textDecoration: 'none', color: 'inherit' }}><i>DoneApp</i></Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div className="lang-toggle-header">
-              <button className={`lang-option ${lang === 'EN' ? 'active' : ''}`} onClick={() => setLang('EN')}>EN</button>
-              <span style={{ color: '#eee', fontSize: '0.75rem' }}>/</span>
-              <button className={`lang-option ${lang === 'FR' ? 'active' : ''}`} onClick={() => setLang('FR')}>FR</button>
+              <button 
+                className="lang-toggle-btn" 
+                onClick={() => setLang(lang === 'EN' ? 'FR' : 'EN')}
+                title={lang === 'FR' ? 'Changer de langue' : 'Switch Language'}
+                style={{ 
+                  background: 'none', border: 'none', cursor: 'pointer', color: '#999', 
+                  display: 'flex', alignItems: 'center', gap: '6px', padding: '4px',
+                  fontSize: '0.85rem', fontWeight: 500
+                }}
+              >
+                <Globe size={18} />
+                <span>{lang}</span>
+              </button>
             </div>
             {user ? (
               <button 
