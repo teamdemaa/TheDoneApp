@@ -62,9 +62,9 @@ const ToDoList = ({
 
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', paddingBottom: '2rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
-        <h2 className="title-medium" style={{ fontSize: '1.5rem' }}>Action Items</h2>
-        <span style={{ color: 'var(--color-grey-text)' }}>{completedCount}/{todos.length} Completed</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', alignItems: 'center' }}>
+        <h2 className="title-medium" style={{ fontSize: '1.2rem', marginBottom: 0 }}>Action Items</h2>
+        <span style={{ color: 'var(--color-grey-text)', fontSize: '0.85rem' }}>{completedCount}/{todos.length} Completed</span>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -72,8 +72,8 @@ const ToDoList = ({
           <div key={todo.id} style={{ 
             display: 'flex', 
             alignItems: 'center', 
-            gap: '16px',
-            padding: '16px',
+            gap: '12px',
+            padding: '12px 14px',
             backgroundColor: 'var(--color-bg-white)',
             borderRadius: '12px',
             boxShadow: '0 2px 12px rgba(0,0,0,0.02)',
@@ -109,13 +109,14 @@ const ToDoList = ({
                   }
                 }}
                 style={{ 
-                  fontSize: '1.1rem', 
+                  fontSize: '1rem', 
                   textDecoration: todo.done ? 'line-through' : 'none',
                   color: todo.done ? 'var(--color-grey-text)' : 'var(--color-black)',
                   outline: 'none',
                   display: 'block',
                   width: '100%',
-                  cursor: 'text'
+                  cursor: 'text',
+                  lineHeight: '1.4'
                 }}>
                 {todo.text}
               </span>

@@ -264,7 +264,7 @@ const ExperimentationKanban = ({
 
   return (
     <div className="strategy-kanban">
-      <div className="kanban-board" style={{ minWidth: '850px' }}>
+      <div className="kanban-board">
         {columns.map((col) => (
           <div 
             key={col} 

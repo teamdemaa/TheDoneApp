@@ -54,9 +54,20 @@ const ContentCalendar = ({
   project?: ProjectData, 
   onUpdateContent?: (updated: ContentPost[]) => void 
 }) => {
-  const [view, setView] = useState<ViewMode>('Month');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [view, setView] = useState<ViewMode>(window.innerWidth < 768 ? 'Day' : 'Month');
   const [isViewDropdownOpen, setIsViewDropdownOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [posts, setPostsState] = useState<ContentPost[]>(() => {
     if (project?.strategy?.content) return project.strategy.content;
     return [
@@ -161,11 +172,11 @@ const ContentCalendar = ({
     const regularDays = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
     return (
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '8px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: isMobile ? '4px' : '8px' }}>
         {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(d => (
-          <div key={d} style={{ fontSize: '0.75rem', color: 'var(--color-grey-text)', textAlign: 'center', marginBottom: '8px', fontWeight: 500 }}>{d}</div>
+          <div key={d} style={{ fontSize: isMobile ? '0.65rem' : '0.75rem', color: 'var(--color-grey-text)', textAlign: 'center', marginBottom: '8px', fontWeight: 500 }}>{isMobile ? d[0] : d}</div>
         ))}
-        {blanks.map(b => <div key={`blank-${b}`} style={{ minHeight: '100px', backgroundColor: 'transparent' }} />)}
+        {blanks.map(b => <div key={`blank-${b}`} style={{ minHeight: isMobile ? '60px' : '100px', backgroundColor: 'transparent' }} />)}
         {regularDays.map(d => {
           const dateStr = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
           const dayPosts = posts.filter(p => p.date === dateStr);
@@ -175,32 +186,38 @@ const ContentCalendar = ({
             <div key={d} 
               onClick={() => openAddModal(dateStr)}
               style={{ 
-              minHeight: '100px', 
+              minHeight: isMobile ? '60px' : '100px', 
               border: isToday ? '1px solid var(--color-black)' : '1px solid var(--color-border)',
-              borderRadius: '8px',
-              padding: '8px',
+              borderRadius: isMobile ? '6px' : '8px',
+              padding: isMobile ? '4px' : '8px',
               backgroundColor: isToday ? 'var(--color-bg-white)' : 'transparent',
               transition: 'background-color 0.2s ease',
               cursor: 'pointer'
             }}
             className="calendar-day-hover"
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: isToday ? 600 : 400, color: isToday ? 'var(--color-black)' : 'var(--color-grey-text)' }}>{d}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: isMobile ? '2px' : '8px' }}>
+                <span style={{ fontSize: isMobile ? '0.7rem' : '0.85rem', fontWeight: isToday ? 600 : 400, color: isToday ? 'var(--color-black)' : 'var(--color-grey-text)' }}>{d}</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {dayPosts.map(post => (
                   <div key={post.id} onClick={(e) => openEditModal(e, post)} style={{ padding: '6px', backgroundColor: 'var(--color-bg-white)', borderRadius: '6px', fontSize: '0.75rem', boxShadow: '0 1px 4px rgba(0,0,0,0.03)' }}>
-                    {renderBadge(post.category)}
-                    {post.experiment && (
-                      <div 
-                        onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent('switch-tab', { detail: 'experimentation' })); }}
-                        style={{ fontSize: '0.65rem', color: '#a3a3a3', marginBottom: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
-                      >
-                        🔗 {experiments.find(exp => String(exp.id) === post.experiment)?.title || 'Linked Exp.'}
-                      </div>
+                    {isMobile ? (
+                       <div style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: 'var(--color-black)', margin: '0 auto' }} />
+                    ) : (
+                      <>
+                        {renderBadge(post.category)}
+                        {post.experiment && (
+                          <div 
+                            onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent('switch-tab', { detail: 'experimentation' })); }}
+                            style={{ fontSize: '0.65rem', color: '#a3a3a3', marginBottom: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                          >
+                            🔗 {experiments.find(exp => String(exp.id) === post.experiment)?.title || 'Linked Exp.'}
+                          </div>
+                        )}
+                        <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{post.theme}</div>
+                      </>
                     )}
-                    <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{post.theme}</div>
                   </div>
                 ))}
               </div>
@@ -212,9 +229,9 @@ const ContentCalendar = ({
   };
 
   const renderListView = (title: string, filteredPosts: ContentPost[]) => (
-    <div style={{ padding: '24px', backgroundColor: 'var(--color-bg-white)', borderRadius: '12px', border: '1px solid var(--color-border)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <h3 style={{ fontSize: '1.25rem', fontWeight: 500 }}>{title}</h3>
+    <div style={{ padding: isMobile ? '16px' : '24px', backgroundColor: 'var(--color-bg-white)', borderRadius: '12px', border: '1px solid var(--color-border)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: isMobile ? '16px' : '24px' }}>
+        <h3 style={{ fontSize: isMobile ? '1.1rem' : '1.25rem', fontWeight: 500 }}>{title}</h3>
         <button 
           onClick={() => openAddModal(currentDate.toISOString().split('T')[0])}
           style={{ padding: '6px 12px', fontSize: '0.8rem', backgroundColor: 'var(--color-bg-grey)', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
@@ -258,14 +275,14 @@ const ContentCalendar = ({
         `}
       </style>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center', marginBottom: '24px', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '12px' : '24px', width: isMobile ? '100%' : 'auto', justifyContent: isMobile ? 'space-between' : 'flex-start' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button onClick={() => navigateDate(-1)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center' }}>
-              <ChevronLeft size={20} color="var(--color-grey-text)" />
+              <ChevronLeft size={isMobile ? 18 : 20} color="var(--color-grey-text)" />
             </button>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 500, minWidth: '140px', textAlign: 'center' }}>
-              {view === 'Month' || view === 'Week' || view === 'Day' ? `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}` : `Q${Math.floor(currentDate.getMonth() / 3) + 1} ${currentDate.getFullYear()}`}
+            <h2 style={{ fontSize: isMobile ? '1.1rem' : '1.2rem', fontWeight: 500, minWidth: isMobile ? '110px' : '140px', textAlign: 'center' }}>
+              {view === 'Month' || view === 'Week' || view === 'Day' ? `${isMobile ? currentDate.toLocaleString('default', { month: 'short' }) : monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}` : `Q${Math.floor(currentDate.getMonth() / 3) + 1} ${currentDate.getFullYear()}`}
             </h2>
             <button onClick={() => navigateDate(1)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center' }}>
               <ChevronRight size={20} color="var(--color-grey-text)" />
