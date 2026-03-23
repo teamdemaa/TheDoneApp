@@ -338,16 +338,19 @@ const ExperimentationKanban = ({
                     className="card-description"
                     contentEditable={expandedTasks[task.id]}
                     suppressContentEditableWarning
-                    style={{ 
-                      cursor: expandedTasks[task.id] ? 'text' : 'pointer', 
-                      outline: 'none', 
-                      marginBottom: '12px',
-                      display: '-webkit-box',
-                      WebkitLineClamp: expandedTasks[task.id] ? 'unset' : 2,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      minHeight: '1em'
-                    }}
+                      style={{ 
+                        cursor: expandedTasks[task.id] ? 'text' : 'pointer', 
+                        outline: 'none', 
+                        marginBottom: '12px',
+                        display: '-webkit-box',
+                        WebkitLineClamp: expandedTasks[task.id] ? 'unset' : 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        minHeight: '1em',
+                        fontSize: window.innerWidth < 768 ? '13px' : '0.9rem',
+                        lineHeight: window.innerWidth < 768 ? '1.35' : '1.5',
+                        color: 'var(--color-black)'
+                      }}
                     onClick={(e) => {
                       if (expandedTasks[task.id]) {
                         e.stopPropagation();
