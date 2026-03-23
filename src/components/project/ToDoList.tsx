@@ -109,7 +109,7 @@ const ToDoList = ({
                   }
                 }}
                 style={{ 
-                  fontSize: '1rem', 
+                  fontSize: '13px', 
                   textDecoration: todo.done ? 'line-through' : 'none',
                   color: todo.done ? 'var(--color-grey-text)' : 'var(--color-black)',
                   outline: 'none',

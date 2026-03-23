@@ -249,7 +249,7 @@ const ContentCalendar = ({
                 {new Date(post.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
               </div>
               <div>{renderBadge(post.category)}</div>
-              <div style={{ fontWeight: 500, fontSize: '0.95rem' }}>{post.theme}</div>
+              <div style={{ fontWeight: 500, fontSize: isMobile ? '13px' : '0.95rem' }}>{post.theme}</div>
             </div>
           ))}
         </div>
