@@ -1,0 +1,137 @@
+.strategy-kanban {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 20px;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 24px;
+  min-width: 900px; /* Force scroll on small screens */
+}
+
+.kanban-col {
+  flex: 1;
+  background-color: var(--color-bg-grey);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  min-height: 500px;
+}
+
+.kanban-col-header {
+  position: relative;
+  margin-bottom: 20px;
+  padding-bottom: 4px;
+  cursor: help;
+}
+
+.kanban-col-header h3 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.col-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--color-black);
+  color: var(--color-bg-white);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  width: 250px;
+  z-index: 10;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.kanban-col-header:hover .col-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.kanban-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kanban-card {
+  background-color: var(--color-bg-white);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.015);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.kanban-card:hover {
+  border-color: rgba(0,0,0,0.03);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.025);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.card-index {
+  color: #a3a3a3;
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.card-title {
+  font-family: var(--font-text);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #a3a3a3;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.card-description {
+  font-size: 0.8rem;
+  color: var(--color-grey-text);
+  opacity: 0.75;
+  margin-bottom: 16px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.card-content {
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 300;
+  outline: none;
+  border: none;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.4s;
+  color: var(--color-black);
+}
+
+.card-content p {
+  margin-bottom: 12px;
+}
+
+.card-content strong {
+  font-weight: 600;
+  color: #000;
+}
+
+.card-content .list-item {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.card-content:focus {
+  background-color: var(--color-bg-white);
+  border: none;
+  outline: none;
+}
